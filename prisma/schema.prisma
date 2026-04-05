@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  phone     String?  @unique
+  password  String
+  role UserRole @default(USER)
+  status UserStatus @default(ACTIVE)
+  orders    Order[]
+  wishlist  Wishlist[]
+  createdAt DateTime @default(now())
+
+}
+
+
+model Product {
+  id           String         @id @default(cuid())
+  name         String
+  description  String         @default("No description")
+  category     Category
+  price        Float
+  discount     Float?
+  totalPrice   Float
+  colour       String
+  blouse       String
+  ghuri        String
+  length       String
+  care         String
+  stock        Int
+  status       ProductStatus
+  images       ProductImage[]
+  createdAt    DateTime       @default(now())
+  Wishlist Wishlist[]
+  OrderItem OrderItem[]
+
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  url       String
+  type      String
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Order {
+  id         String       @id @default(cuid())
+  userId     String
+  user       User         @relation(fields: [userId], references: [id])
+  items      OrderItem[]
+  totalPrice Float
+  status     OrderStatus
+  createdAt  DateTime     @default(now())
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  username  String
+  rating    Int      // 1–5
+  comment   String
+  image     String?
+  createdAt DateTime @default(now())
+}
+
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+}
+
+model Wishlist {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Gallery {
+  id        String   @id @default(cuid())
+  url       String
+  publicId  String
+  createdAt DateTime @default(now())
+}
+
+
+enum Category {
+  HALF_SILK
+  PURE_COTTON
+}
+
+enum ProductStatus {
+  IN_STOCK
+  PRE_ORDER
+}
+
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
