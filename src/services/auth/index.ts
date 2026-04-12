@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const loginUser = async (userData: any) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/auth/login`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
@@ -10,7 +10,7 @@ export const loginUser = async (userData: any) => {
 };
 
 export const registerUser = async (userData: any) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/auth/register`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
@@ -19,9 +19,8 @@ export const registerUser = async (userData: any) => {
   return res.json();
 };
 
-
 export const getCurrentUser = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/auth/get-me`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/get-me`, {
     credentials: "include",
   });
 
