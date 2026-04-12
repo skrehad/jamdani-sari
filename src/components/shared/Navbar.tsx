@@ -9,7 +9,7 @@ import { Menu, X } from "lucide-react";
 import { useAuth } from "@/provider/UserProvider";
 
 export default function Navbar() {
-  const { user, isLoading, logOut } = useAuth();
+  const { user, logOut } = useAuth();
   const [open, setOpen] = useState(false);
 
   const linkClass =
@@ -44,47 +44,45 @@ export default function Navbar() {
 
         {/* AUTH */}
         <div className="hidden md:flex items-center gap-3">
-          {!isLoading && (
-            <>
-              {user ? (
-                <>
-                  <Link
-                    href={
-                      user.role === "ADMIN"
-                        ? "/admin/dashboard"
-                        : "/user/dashboard"
-                    }
-                    className={`${authBtn} bg-black text-white hover:opacity-80`}
-                  >
-                    Dashboard
-                  </Link>
+          <>
+            {user ? (
+              <>
+                <Link
+                  href={
+                    user.role === "ADMIN"
+                      ? "/admin/dashboard"
+                      : "/user/dashboard"
+                  }
+                  className={`${authBtn} bg-black text-white hover:opacity-80`}
+                >
+                  Dashboard
+                </Link>
 
-                  <button
-                    onClick={logOut}
-                    className={`${authBtn} border cursor-pointer border-red-300 text-gray-700 hover:bg-gray-100`}
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    className={`${authBtn} bg-black text-white hover:opacity-80`}
-                  >
-                    Login
-                  </Link>
+                <button
+                  onClick={logOut}
+                  className={`${authBtn} border cursor-pointer border-red-300 text-gray-700 hover:bg-gray-100`}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className={`${authBtn} bg-black text-white hover:opacity-80`}
+                >
+                  Login
+                </Link>
 
-                  <Link
-                    href="/register"
-                    className={`${authBtn} border border-gray-300 text-gray-700 hover:bg-gray-100`}
-                  >
-                    Register
-                  </Link>
-                </>
-              )}
-            </>
-          )}
+                <Link
+                  href="/register"
+                  className={`${authBtn} border border-gray-300 text-gray-700 hover:bg-gray-100`}
+                >
+                  Register
+                </Link>
+              </>
+            )}
+          </>
         </div>
 
         {/* MOBILE BUTTON */}
@@ -110,41 +108,39 @@ export default function Navbar() {
           </Link>
 
           <div className="pt-4 border-t space-y-3">
-            {!isLoading && (
-              <>
-                {user ? (
-                  <>
-                    <Link
-                      href={
-                        user.role === "ADMIN"
-                          ? "/admin/dashboard"
-                          : "/user/dashboard"
-                      }
-                      className="block font-medium"
-                    >
-                      Dashboard
-                    </Link>
+            <>
+              {user ? (
+                <>
+                  <Link
+                    href={
+                      user.role === "ADMIN"
+                        ? "/admin/dashboard"
+                        : "/user/dashboard"
+                    }
+                    className="block font-medium"
+                  >
+                    Dashboard
+                  </Link>
 
-                    <button
-                      onClick={logOut}
-                      className="block text-red-500 font-medium"
-                    >
-                      Logout
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <Link href="/login" className="block font-medium">
-                      Login
-                    </Link>
+                  <button
+                    onClick={logOut}
+                    className="block text-red-500 font-medium"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" className="block font-medium">
+                    Login
+                  </Link>
 
-                    <Link href="/register" className="block font-medium">
-                      Register
-                    </Link>
-                  </>
-                )}
-              </>
-            )}
+                  <Link href="/register" className="block font-medium">
+                    Register
+                  </Link>
+                </>
+              )}
+            </>
           </div>
         </div>
       )}
